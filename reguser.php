@@ -2,7 +2,7 @@
 
 function openDatabase()
 {
-	include 'mysql.inc.php';
+	include './login/mysql.inc.php';
 	
 	$DB_REF = mysql_connect($DB_HOST, $DB_USER, $DB_PASS);
 	
