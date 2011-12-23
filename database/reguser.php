@@ -56,17 +56,14 @@ function getScreenNameFromMentionID($mentionid)
 {
 	openDatabase();
 	
-	//Get UserID for that mention:
-	$result = mysql_query("SELECT USERID FROM CONVERSATIONS WHERE MENTIONID = \"$mentionid\"") or die(mysql_error());
-	$result = mysql_fetch_row($result);
+	$query = "SELECT USERS.USERID, USERS.SCREENNAME, CONVERSATIONS.MENTIONID 
+			  FROM USERS INNER JOIN CONVERSATIONS 
+			  ON USERS.USERID = CONVERSATIONS.USERID
+			  WHERE CONVERSATIONS.MENTIONID = \"$mentionid\"";
 	
-	$result = mysql_query("SELECT SCREENNAME FROM USERS WHERE USERID = \"$uid\"") or die(mysql_error());
-
-	$rows = mysql_fetch_row($result);
-	print_r($rows[0]);
-	
-	if(mysql_num_rows($rows) > 0) die("Failed to get ScreenName. " . mysql_error());
-	else return $screenname;
+	$result = mysql_query($query);
+	$rows = mysql_fetch_assoc($result);
+	return $rows['SCREENNAME'];
 }
 	
 

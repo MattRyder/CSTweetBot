@@ -25,10 +25,13 @@ function postReply($mentionid, $tweet)
 	
 	//Set the Mention!
 	$foo = getScreenNameFromMentionID($mentionid);
-	echo $foo;
-	echo "Why am I not being hit?";
+	$tweet = "@" . $foo . " " . $tweet;
 	
-	$code = $oAuthTokens->request('POST', $oAuthTokens->url('1/statuses/update'), array('status' => $tweet));
+	$code = $oAuthTokens->request('POST', $oAuthTokens->url('1/statuses/update'), 
+	array(
+	'status' => $tweet,
+	'in_reply_to_status_id_str' => $mentionid
+	));
 	
 	if($code == 200)
 	{
