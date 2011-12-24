@@ -2,7 +2,7 @@
 
 require_once "twitter/tmhOAuth.php";
 require_once "twitter/tmhUtilities.php";
-require_once "reguser.php";
+require_once "userRegistration.php";
 
 function getMentions() 
 {
@@ -27,11 +27,8 @@ function tryRegisterUser($screenname)
 { 
   if(!isUserRegistered($screenname)) 
   {
-	  echo $screenname . " not registered. <br />"; // DEBUG
 	  registerUser($screenname);
   }
-  else
-	  echo $screenname . " is already registered. <br />"; //DEBUG
 }
 
 ?>

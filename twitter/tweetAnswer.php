@@ -6,7 +6,7 @@
  */
 require_once "twitter/tmhOAuth.php";
 require_once "twitter/tmhUtilities.php";
-require_once "database/reguser.php";
+require_once "database/userRegistration.php";
 
 function verifyCharLimit($tweet)
 {
@@ -24,19 +24,18 @@ function postReply($mentionid, $tweet)
 	));
 	
 	//Set the Mention!
-	$foo = getScreenNameFromMentionID($mentionid);
-	$tweet = "@" . $foo . " " . $tweet;
+	$screenname = getScreenNameFromMentionID($mentionid);
+	$tweet = "@" . $screenname . " A: " . $tweet;
 	
 	$code = $oAuthTokens->request('POST', $oAuthTokens->url('1/statuses/update'), 
-	array(
-	'status' => $tweet,
-	'in_reply_to_status_id_str' => $mentionid
-	));
+	array('status' => $tweet,'in_reply_to_status_id' => $mentionid));
 	
 	if($code == 200)
 	{
 		//success!
-		tmhUtilities::pr(json_decode($oAuthTokens->response['response']));
+		$response = json_decode($oAuthTokens->response['response']);
+		$responseid = $reponse->id_str;
 		registerResponse($mentionid, $responseid);
+		
 	}	
 }
