@@ -4,11 +4,8 @@
  * Parses questions passed to it and provokes a valid response.
  * Date: 17 Dec 2011
  */
-
-/* Parses a given question by exploding and analyzing the string 
- * to generate an appropriate response.
- */ 
-include 'mathparser.php';
+ 
+require_once 'mathparser.php';
  
 class QuestionParser
 {
@@ -16,6 +13,10 @@ class QuestionParser
 	{
 		//Parse it to lower:
 		$question = strtolower($question);
+		
+		//Remove any ending question/exclamation marks passed in the question:
+		$question = preg_replace("/[?|!]$/", '', $question);
+		
 		$qElements = preg_split("/[\s]/", $question, -1, PREG_SPLIT_NO_EMPTY);
 		
 		//Regex the first word for "who/what/when/where/why"
@@ -33,6 +34,7 @@ class QuestionParser
 		
 		if(preg_match("/^h([ello]|[ey]|[i])/", $qElements[0]))
 		{
+			//Return the token that tells CSTweetBot to send a hello message.
 			return "RETURN_GREETING_WITH_NAME";
 		}
 	}
