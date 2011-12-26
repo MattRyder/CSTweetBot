@@ -60,5 +60,4 @@ function registerMention($screenName, $mentionid)
 function registerResponse($mentionid, $replyid)
 {
 	$result = mysql_query("UPDATE CONVERSATIONS SET REPLYID = \"$replyid\" WHERE MENTIONID = \"$mentionid\"") or die(mysql_error());
-	print_r($result); //DEBUG - Not sure if this is working 100%...
 }	
