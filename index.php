@@ -16,7 +16,6 @@ function parseMentions($mentions)
 	error_reporting(E_ALL);
 	echo "<a href=\"https://github.com/MattRyder/CSTweetBot\">Tweetbot v0.0.0.1</a>";
 	
-	/*
 	foreach($mentions as $mention)
 	{
 		$mentionid = $mention->id_str;
@@ -27,7 +26,7 @@ function parseMentions($mentions)
 			echo "     Name: " . $mention->user->name . "<br />\n";
 			echo "  Tweeted: " . $mention->text . "<br />\n";
 			echo "Tweet URL: <a href=\"http://twitter.com/#!/CSTweetBot/status/" . $mention->id_str . "\">Open Twitter</a>\n";
-			/ 
+			*/ 
 					
 			//Register the user:
 			tryRegisterUser($mention->user->screen_name);
@@ -46,7 +45,7 @@ function parseMentions($mentions)
 			postReply($mentionid, $answer);
 			
 		}
-	}*/
+	}
 }
 
 //Strips the @ScreenName from a tweet

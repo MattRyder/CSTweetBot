@@ -34,7 +34,7 @@ function postReply($mentionid, $tweet)
 	{
 		//success!
 		$response = json_decode($oAuthTokens->response['response']);
-		$responseid = $reponse->id_str;
+		$responseid = $response->id_str;
 		registerResponse($mentionid, $responseid);
 		
 	}	
