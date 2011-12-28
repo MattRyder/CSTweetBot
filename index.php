@@ -8,17 +8,7 @@ require_once "database/tweetRegistration.php";
 
 //Setup Database & Grep Mentions:
 $mentions = getMentions();
-//parseMentions($mentions);
-
-//Testing Wiki functions:
-$q = new QuestionParser();
-$question = "Who was Steve Jobs?";
-$res = $q->parseQuestion($question);
-
-if($res != NULL)
-{
-	echo "Q: $question\nA: $res\n";
-}
+parseMentions($mentions);
 
 function parseMentions($mentions)
 {
@@ -52,6 +42,7 @@ function parseMentions($mentions)
 			if($answer == "RETURN_GREETING_WITH_NAME") { $answer = "Hey there, " . $mention->user->name; }
 			
 			//Tweet the answer to the user and register the response:
+			echo "Mention ID: $mentionid, Answer: $answer";
 			postReply($mentionid, $answer);
 			
 		}
