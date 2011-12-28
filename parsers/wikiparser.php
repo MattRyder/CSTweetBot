@@ -15,13 +15,13 @@ function getWikiArticle($refName)
 
 	foreach($url_response->query->pages as $item => $val) { $pageid = $item; break; }
 	
-	if($pageid != NULL)
+	if($pageid > 0)
 	{
 		$url = "http://en.wikipedia.org/w/api.php?action=query&redirects&format=json&prop=info&pageids=$pageid&inprop=url";
 		$pageJSON = get_data($url);
 		$pageJSON = json_decode($pageJSON);
 		$pageURL = $pageJSON->query->pages->$pageid->fullurl;
-		return $pageURL;
+		return "More information about $refName: " . $pageURL;
 	}
 	else return NULL;
 }
