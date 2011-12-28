@@ -31,8 +31,9 @@ class QuestionParser
 					if(strlen($referenceName) == 0) { $referenceName = $qElements[$i]; }
 					else $referenceName = $referenceName . '_' . $qElements[$i];
 				}
-				
-				return getWikiArticle($referenceName);
+				$what = getWikiArticle($referenceName);
+				echo $what; print_r($what);
+				return $what;
 			}
 		}
 				
