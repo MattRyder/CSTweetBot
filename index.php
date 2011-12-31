@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL);
 require_once 'database/authenticate.php';
 require_once 'parsers/questionparser.php';
 require_once 'twitter/tweetAnswer.php';
@@ -7,14 +7,20 @@ require_once "database/userRegistration.php";
 require_once "database/tweetRegistration.php";
 
 //Setup Database & Grep Mentions:
-$mentions = getMentions();
-parseMentions($mentions);
+//$mentions = getMentions();
+//parseMentions($mentions);
+
+$qpa = new QuestionParser();
+$foo = $qpa->parseQuestion("Who is Jim Morrison?");
+postReply(0, $foo);
 
 function parseMentions($mentions)
 {
-	//Setup error reporting:
-	error_reporting(E_ALL);
-	echo "<a href=\"https://github.com/MattRyder/CSTweetBot\">Tweetbot v0.0.0.2</a>";
+	
+	//echo "<a href=\"https://github.com/MattRyder/CSTweetBot\">Tweetbot v0.0.0.2</a>";
+	
+	//if(count($mentions) == 0)
+		//die("Nothing to parse, or bad network connection!\n");
 	
 	foreach($mentions as $mention)
 	{
@@ -26,7 +32,7 @@ function parseMentions($mentions)
 			echo "     Name: " . $mention->user->name . "<br />\n";
 			echo "  Tweeted: " . $mention->text . "<br />\n";
 			echo "Tweet URL: <a href=\"http://twitter.com/#!/CSTweetBot/status/" . $mention->id_str . "\">Open Twitter</a>\n";
-			*/ 
+			//*/ 
 					
 			//Register the user:
 			tryRegisterUser($mention->user->screen_name);
@@ -42,7 +48,7 @@ function parseMentions($mentions)
 			if($answer == "RETURN_GREETING_WITH_NAME") { $answer = "Hey there, " . $mention->user->name; }
 			
 			//Tweet the answer to the user and register the response:
-			echo "Mention ID: $mentionid, Answer: $answer";
+			//echo "Mention ID: $mentionid, Answer: $answer";
 			postReply($mentionid, $answer);
 			
 		}

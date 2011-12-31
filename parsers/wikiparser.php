@@ -21,7 +21,7 @@ function getWikiArticle($refName)
 		$pageJSON = get_data($url);
 		$pageJSON = json_decode($pageJSON);
 		$pageURL = $pageJSON->query->pages->$pageid->fullurl;
-		return "More information about $refName: " . $pageURL;
+		return $pageURL;
 	}
 	else return NULL;
 }

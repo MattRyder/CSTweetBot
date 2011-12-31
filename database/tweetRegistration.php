@@ -11,12 +11,8 @@ if(!function_exists("openDatabase"))
 	function openDatabase()
 	{
 		include "login/mysql.inc.php";
-		$DB_REF = mysql_connect($DB_HOST, $DB_USER, $DB_PASS);
-	
-		if(!$DB_REF) 
-			die("Failed to connect to MySQL DB. <br />Guru Meditation:<br />" . mysql_error());
-		else	
-			mysql_select_db($DB_NAME, $DB_REF);
+		$DB_REF = mysql_pconnect($DB_HOST, $DB_USER, $DB_PASS) or die("Failed to connect to MySQL DB:\n" . mysql_error());
+		mysql_select_db($DB_NAME, $DB_REF) or die("Failed to connect to MySQL DB:\n" . mysql_error());
 	}
 }
 

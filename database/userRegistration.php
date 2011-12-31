@@ -11,12 +11,8 @@ if(!function_exists("openDatabase"))
 	function openDatabase()
 	{
 		include "login/mysql.inc.php";
-		$DB_REF = mysql_connect($DB_HOST, $DB_USER, $DB_PASS);
-	
-		if(!$DB_REF) 
-			die("Failed to connect to MySQL DB. <br />Guru Meditation:" . mysql_error());
-		else	
-			mysql_select_db($DB_NAME, $DB_REF);
+		$DB_REF = mysql_connect($DB_HOST, $DB_USER, $DB_PASS) or die("Failed to connect to MySQL DB:\n" . mysql_error());
+		mysql_select_db($DB_NAME, $DB_REF);
 	}
 }
 
@@ -43,9 +39,7 @@ function registerUser($sn)
 	$safeSN = mysql_escape_string($sn);
 	openDatabase();
 	
-	$result = mysql_query("INSERT INTO USERS (SCREENNAME) VALUES (\"$safeSN\")") or die(mysql_error());
-	echo "Added user: " . $sn;
-		
+	$result = mysql_query("INSERT INTO USERS (SCREENNAME) VALUES (\"$safeSN\")") or die(mysql_error());		
 }
 
 // Gets the user's internal Database ID from their Twitter Screenname
@@ -54,11 +48,10 @@ function getUserIDFromScreenName($sn)
 	openDatabase();
 	
 	$result = mysql_query("SELECT USERID FROM USERS WHERE SCREENNAME = \"$sn\"") or die(mysql_error());
+	$userRow = mysql_fetch_row($result);
 	
-	$rows = mysql_fetch_row($result);
-	
-	if(mysql_num_rows($rows) > 0) die("Failed to get UserID. " . mysql_error());
-	else return $rows[0];
+	if(!$userRow) die("Failed to get UserID. " . mysql_error());
+	else return $userRow[0];
 }
 
 // Gets the user's Twitter Screenname from a Mention ID

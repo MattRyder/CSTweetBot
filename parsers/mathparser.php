@@ -44,7 +44,6 @@ function doOrderOfOperations($va_args, $opChar)
 		  	}
 		}
 	}
-	
 	return $va_args;
 }
 
@@ -53,11 +52,12 @@ function va_math($mathstr)
 	$operators = array('/', '*', '+', '-'); 
 	$va_args = preg_split("/([*\/^+-]+)\s*|([\d.]+)\s*/", $mathstr, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 	
+	var_dump($va_args);
+	
 	foreach($operators as $operator) 
 	{
 		$va_args = doOrderOfOperations($va_args, $operator);
 	}
-	
 	return $va_args[0]; //Return the 0'th index, should be the last one in array.
 }
 

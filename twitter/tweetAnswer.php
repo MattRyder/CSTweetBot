@@ -26,8 +26,11 @@ function postReply($mentionid, $tweet)
 	//Set the Mention!
 	$screenname = getScreenNameFromMentionID($mentionid);
 	$tweet = "@" . $screenname . " A: " . $tweet;
+	print_r($tweet);
 	
 	//$code = $oAuthTokens->request('POST', $oAuthTokens->url('1/statuses/update'), array('status' => $tweet,'in_reply_to_status_id' => $mentionid));
+	
+	$response = json_decode($oAuthTokens->response['response']);
 	
 	if($code == 200)
 	{

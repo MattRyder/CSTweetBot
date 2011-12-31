@@ -13,10 +13,9 @@ function getMentions()
 	'consumer_secret' => $csConsumerSec,
 	'user_token'		=> $csUserToken,
 	'user_secret'		=> $csUserSecret,
-  ));
+  	));
   
   $method = $oAuthTokens->url('statuses/mentions.json?include_entities=true&count=100');
-  
   $oAuthTokens->request('GET', $method);
   
   $raw_data = json_decode($oAuthTokens->response['response']);
