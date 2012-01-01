@@ -28,16 +28,13 @@ function postReply($mentionid, $tweet)
 	$tweet = "@" . $screenname . " A: " . $tweet;
 	print_r($tweet);
 	
-	//$code = $oAuthTokens->request('POST', $oAuthTokens->url('1/statuses/update'), array('status' => $tweet,'in_reply_to_status_id' => $mentionid));
-	
+	$code = $oAuthTokens->request('POST', $oAuthTokens->url('1/statuses/update'), array('status' => $tweet,'in_reply_to_status_id' => $mentionid));
 	$response = json_decode($oAuthTokens->response['response']);
 	
 	if($code == 200)
 	{
 		//success!
-		$response = json_decode($oAuthTokens->response['response']);
 		$responseid = $response->id_str;
 		registerResponse($mentionid, $responseid);
-		
 	}	
 }
