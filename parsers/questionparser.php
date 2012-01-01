@@ -21,14 +21,19 @@ class QuestionParser
 		//Regex the first word for "who/what/when/where/why"
 		if(preg_match("/^wh([at]|[en]|[ere]|[hy])/", $qElements[0]))
 		{
-			
 			if($qElements[1] == "is")
 			{
 				//Can we do math on this question? Regex to find out!
 				if(preg_match("/^[0-9]+[\+|\-|*|\/|\\][0-9]+./", $qElements[2]))
 				{
 					//Get the full string and account for spaces!
-					$mathstr = $this->strcat($qElements, 2, count($qElements), ' ');
+					for($i=2; $i < count($qElements); ++$i) 
+					{
+		  				if(strlen($str) == 0) 
+		  					$mathstr = $qElements[$i];
+		  				else 
+		  					$mathstr = $mathstr . " " . $qElements[$i];
+					}
 					echo $mathstr;
 					return va_math($mathstr);
 				}
@@ -56,34 +61,8 @@ class QuestionParser
 					else { $referenceName = $referenceName . '_' . $qElements[$i]; $displayName = $displayName . ' ' . ucwords($qElements[$i]); }
 				}
 				$wikiResult = "More info for " . $displayName . ": " . getWikiArticle($referenceName);
-				$tweetify = twitterStatusUrlConverter($wikiResult);
-				return $tweetify;
+				return $wikiResult;
 			}
 		}
-	}
-	
-	/** 
-	 * String Concatenation
-	 * @array 	- The array of strings to concatenate
-	 * @base	- The base address in the array to start at.
-	 * @len		- The length to go to in the array.
-	 */
-	private function strcat($array, $base, $len, $delimiter)
-	{
-		$str = NULL;
-		if($base >= count($array) || $len >= count($array))
-		{
-			echo "Bad base orlength address in strcat. More than count(array)!";
-			return NULL;
-		}
-		
-		for($i = $base; $i < $base+$len; $i++)
-		{
-		  if(strlen($str) == 0) 
-		  	$referenceName = $qElements[$i];
-		  else 
-		  	$referenceName = $referenceName . $delimiter . $qElements[$i];
-		}
-		
 	}
 };
