@@ -1,4 +1,4 @@
-<?
+<?php
 
 /* TWEET ANSWER (tweetanswer.php)
  * Formats and responds to tweets, then registers it in the Database
@@ -38,3 +38,4 @@ function postReply($mentionid, $tweet)
 		registerResponse($mentionid, $responseid);
 	}	
 }
+?>
